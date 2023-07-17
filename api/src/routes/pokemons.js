@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     try {
-        const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon');
+        const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon', { params: { limit: 100 } });
         const results = data.results;
 
         // Hacer una solicitud a cada URL de los resultados
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
             return {
                 id: data.id.toString(),
                 nombre: data.name,
-                imagen: data.sprites.front_default,
+                imagen: data.sprites.other.home.front_default,
                 vida: data.stats[0].base_stat,
                 ataque: data.stats[1].base_stat,
                 defensa: data.stats[2].base_stat,
