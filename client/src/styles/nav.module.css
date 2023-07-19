@@ -1,0 +1,113 @@
+.nav {
+  background-color: var(--red);
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap
+}
+
+.containerLogo {
+  width: 350px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBar {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-right: 4rem;
+}
+
+.text {
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.containerSubmit {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.input {
+  color: var(--black);
+  width: 60%;
+  padding: 0.4rem;
+  border-radius: 1rem;
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -ms-border-radius: 1rem;
+  -o-border-radius: 1rem;
+  outline: 0;
+  border: 3px solid var(--blue);
+  box-shadow: 0rem 0rem 0.5rem 0.1rem var(--blue);
+  transition: border-color 0.5s ease-in, box-shadow 0.5s ease-out;
+}
+
+.input:focus {
+  border-color: var(--yellow);
+  box-shadow: 0rem 0rem 0.5rem 0.1rem var(--yellow);
+  transition: border-color 0.5s ease-in, box-shadow 0.5s ease-out;
+  -webkit-transition: border-color 0.5s ease-in, box-shadow 0.5s ease-out;
+  -moz-transition: border-color 0.5s ease-in, box-shadow 0.5s ease-out;
+  -ms-transition: border-color 0.5s ease-in, box-shadow 0.5s ease-out;
+  -o-transition: border-color 0.5s ease-in, box-shadow 0.5s ease-out;
+}
+
+.submit {
+  background-color: var(--yellow);
+  border: none;
+  color: var(--black);
+  width: 30%;
+  cursor: pointer;
+  font-weight: bolder;
+  border-radius: 0.2rem;
+  -webkit-border-radius: 0.2rem;
+  -moz-border-radius: 0.2rem;
+  -ms-border-radius: 0.2rem;
+  -o-border-radius: 0.2rem;
+}
+
+.submit {
+  background: var(--yellow);
+  border: none;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.submit:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  background-color: var(--blue);
+  border-radius: 5px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  transition: all 0.3s ease;
+}
+
+.submit:hover {
+  color: #fff;
+}
+
+.submit:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+.submit:active {
+  top: 2px;
+}

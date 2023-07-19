@@ -8,4 +8,10 @@
 :root{
     --white: rgb(244, 244, 244);
     --red: rgb(202, 13, 41);
+    --black: rgb(61, 61, 61);
+    --yellow: rgb(255, 203, 5);
+    --blue: rgb(41, 114, 184);
+}
+body {
+    background-color: var(--white);
 }

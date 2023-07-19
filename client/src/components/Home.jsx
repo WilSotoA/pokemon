@@ -1,6 +1,13 @@
+import Cards from "./Cards";
+import Nav from "./Nav";
+
+
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Nav/>
+      <Cards/>
+    </div>
   )
 }
 
