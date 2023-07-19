@@ -29,6 +29,8 @@
     justify-content: space-around
 }
 
+/* tipos de pokemons  */
+
 .grass {
     background: url("../assets/grass.png");
     background-color: rgb(0, 170, 45);
@@ -57,6 +59,58 @@
 .flying {
     background: url("../assets/flying.png");
     background-color: rgb(0, 179, 255);
+}
+
+.psychic {
+    background: url("../assets/psychic.png");
+    background-color: rgb(150, 90, 255);
+}
+
+.normal {
+    background: url("../assets/normal.png");
+    background-color: rgb(190, 190, 190);
+}
+
+.electric {
+    background: url("../assets/electric.png");
+    background-color: rgb(255, 255, 0);
+}
+
+.ground {
+    background: url("../assets/ground.png");
+    background-color: rgb(139, 69, 19);
+    color: var(--white) !important;
+}
+
+.fairy {
+    background: url("../assets/fairy.png");
+    background-color: rgb(255, 182, 193);
+}
+
+.fighting {
+    background: url("../assets/fighting.png");
+    background-color: rgb(255, 140, 0);
+}
+
+.rock {
+    background: url("../assets/rock.png");
+    background-color: rgb(128, 128, 128);
+}
+
+.steel {
+    background: url("../assets/steel.png");
+    background-color: rgb(192, 192, 192);
+}
+
+.ice {
+    background: url("../assets/ice.png");
+    background-color: rgb(135, 206, 250);
+}
+
+.ghost {
+    background: url("../assets/ghost.png");
+    background-color: rgb(128, 0, 128);
+    color: var(--white) !important;
 }
 
 .tipo {
