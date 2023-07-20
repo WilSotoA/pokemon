@@ -4,7 +4,7 @@ import { prevPage, nextPage } from "../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 function Paginate({ cantPage }) {
-  const { numPage } = useSelector((state) => state);
+  const numPage = useSelector((state) => state.numPage);
   const dispatch = useDispatch();
 
   return (

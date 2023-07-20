@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import Paginate from "./Paginate";
 
 export default function Cards() {
-  const { pokemons, numPage, numCards } = useSelector((state) => state);
+  const numPage = useSelector((state) => state.numPage);
+  const numCards = useSelector((state) => state.numCards);
+  const pokemons = useSelector((state) => state.pokemons);
+
   const [cantPage, setCantPage] = useState(1);
   const from = (numPage - 1) * numCards;
   const to = numPage * numCards;
@@ -30,7 +33,11 @@ export default function Cards() {
               </div>
             );
           })}
-        <Paginate cantPage={cantPage} />
+        {viewPokemons.length ? (
+          <Paginate cantPage={cantPage} />
+        ) : (
+          <h1 className={styles.message}>No se encontraron resultados</h1>
+        )}
       </main>
     </>
   );
