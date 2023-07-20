@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/', allPokemons);
 
-router.get('/id/:idPokemon', detailPokemon);
+router.get('/detail/:idPokemon', detailPokemon);
 
 router.get('/name', pokemonPerName);
 

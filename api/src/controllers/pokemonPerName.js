@@ -1,4 +1,4 @@
-const { Pokemon } = require('../db.js');
+const { Pokemon, Type } = require('../db.js');
 const axios = require('axios');
 
 async function pokemonPerName(req, res) {
@@ -6,26 +6,23 @@ async function pokemonPerName(req, res) {
     name = name.toLowerCase();
 
     try {
-        const pokemonDb = await Pokemon.findAll({ where: { nombre: name } });
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const tipos = data.types.map((tipo) => tipo.type.name);
         const pokemonApi = {
             id: data.id.toString(),
             nombre: data.name,
-            imagen: data.sprites.front_default,
-            vida: data.stats[0].base_stat,
-            ataque: data.stats[1].base_stat,
-            defensa: data.stats[2].base_stat,
-            velocidad: data.stats[5].base_stat,
-            altura: data.height,
-            peso: data.weight
-        }
-        const mergedResults = pokemonDb.concat(pokemonApi);
-
-        if (!mergedResults.length) {
-            res.status(404).json({ error: 'No se encontraron Pokémon.' });
-        } else {
-            res.status(200).json(mergedResults);
-        }
+            imagen: data.sprites.other.home.front_default,
+            tipos: tipos
+        };
+        const pokemonDb = await Pokemon.findAll({ where: { nombre: name }, include: Type });
+        const updatedPokemonDb = pokemonDb.map(pokemon => ({
+            id: pokemon.id,
+            nombre: pokemon.nombre,
+            imagen: pokemon.imagen,
+            tipos: pokemon.types.map(type => type.nombre)
+        }));
+        const result = updatedPokemonDb.concat(pokemonApi);
+        res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

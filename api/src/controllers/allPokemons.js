@@ -3,7 +3,7 @@ const { Pokemon, Type } = require('../db.js');
 
 async function allPokemons(req, res) {
     try {
-        const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon', { params: { limit: 100 } });
+        const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon', { params: { limit: 1000 } });
         const results = data.results;
 
         // Hacer una solicitud a cada URL de los resultados
@@ -14,12 +14,6 @@ async function allPokemons(req, res) {
                 id: data.id.toString(),
                 nombre: data.name,
                 imagen: data.sprites.other.home.front_default,
-                vida: data.stats[0].base_stat,
-                ataque: data.stats[1].base_stat,
-                defensa: data.stats[2].base_stat,
-                velocidad: data.stats[5].base_stat,
-                altura: data.height,
-                peso: data.weight,
                 tipos: tipos
             };
         });
@@ -27,8 +21,10 @@ async function allPokemons(req, res) {
         const pokemonData = await Promise.all(pokemonDataPromises);
         const pokemonDb = await Pokemon.findAll({ include: Type });
         const updatedPokemonDb = pokemonDb.map(pokemon => ({
-            ...pokemon.dataValues,
-            types: pokemon.types.map(type => type.nombre)
+            id: pokemon.id,
+            nombre: pokemon.nombre,
+            imagen: pokemon.imagen,
+            tipos: pokemon.types.map(type => type.nombre)
         }));
         const result = pokemonData.concat(updatedPokemonDb);
         res.status(200).json(result);
