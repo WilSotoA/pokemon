@@ -83,6 +83,10 @@
   cursor: pointer;
 }
 
+.block {
+  cursor: not-allowed;
+}
+
 .submit:after {
   position: absolute;
   content: "";

@@ -21,8 +21,13 @@
 }
 
 .numPage {
-    background-color: yellow;
-    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--black);
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    max-width: 5rem;
+    color: var(--blue);
+    padding: 0.5rem 0.1rem; 
     border-radius: 0.5rem;
     -webkit-border-radius: 0.5rem;
     -moz-border-radius: 0.5rem;
@@ -39,4 +44,8 @@
     -moz-transition: color 0.5s ease-in-out;
     -ms-transition: color 0.5s ease-in-out;
     -o-transition: color 0.5s ease-in-out;
+}
+.message {
+    color: var(--red);
+    text-align: center;
 }

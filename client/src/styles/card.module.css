@@ -19,6 +19,7 @@
 
 .image {
     width: 50%;
+    min-height: 190px;
 }
 
 .tipos {
@@ -112,6 +113,20 @@
     background-color: rgb(128, 0, 128);
     color: var(--white) !important;
 }
+
+.dragon {
+    background: url("https://cdn-icons-png.flaticon.com/128/5169/5169265.png");
+    background-color: rgb(0, 128, 0);
+    color: var(--white) !important;
+}
+
+.dark {
+    background: url("https://cdn-icons-png.flaticon.com/128/6929/6929008.png");
+    background-color: var(--black);
+    color: var(--white) !important;
+}
+
+
 
 .tipo {
     background-repeat: no-repeat;

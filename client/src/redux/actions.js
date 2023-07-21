@@ -1,4 +1,8 @@
-import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, ORDER, FILTER } from "./types";
+import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, CHANGE_PAGE, ORDER, FILTER, SEARCH } from "./types";
+import axios from 'axios';
+const { VITE_SERVER_URL } = import.meta.env;
+
+
 
 export function addPokemon(pokemon) {
     return {
@@ -26,6 +30,13 @@ export const nextPage = () => {
     }
 }
 
+export const changePage = (page) => {
+    return {
+        type: CHANGE_PAGE,
+        payload: page
+    }
+}
+
 export const filterCards = (tipo) => {
     return {
         type: FILTER,
@@ -37,5 +48,23 @@ export const orderCards = (orden) => {
     return {
         type: ORDER,
         payload: orden
+    }
+}
+
+export const searchName = (name) => {
+    const endpoint = `${VITE_SERVER_URL}name?name=${name}`;
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(endpoint);
+            return dispatch({
+                type: SEARCH,
+                payload: data,
+            });
+        } catch (error) {
+            return dispatch({
+                type: SEARCH,
+                payload: '',
+            });
+        }
     }
 }

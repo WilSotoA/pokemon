@@ -24,7 +24,8 @@ async function pokemonPerName(req, res) {
         const result = updatedPokemonDb.concat(pokemonApi);
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        const statusCode = error.response ? error.response.status : 500;
+        res.status(statusCode).json({ error: error.message });
     }
 }
 

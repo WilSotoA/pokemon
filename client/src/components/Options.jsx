@@ -17,7 +17,7 @@ function Options() {
   return (
     <div className={styles.options}>
       <select className={styles.select} name="order" id="order" onChange={handleOrder}>
-        <option value="default">Select Order: </option>
+        <option value="default">Ordenar: </option>
         <option value="asc">Ascendente</option>
         <option value="desc">Descendente</option>
       </select>

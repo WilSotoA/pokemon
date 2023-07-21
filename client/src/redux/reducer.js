@@ -1,9 +1,10 @@
-import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, FILTER, ORDER } from "./types";
+import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, CHANGE_PAGE, FILTER, ORDER, SEARCH } from "./types";
 
 const initialState = {
     allPokemons: [],
     pokemons: [],
     types: [],
+    notResult: false,
     numPage: 1,
     numCards: 12
 };
@@ -50,11 +51,18 @@ export default function reducer(state = initialState, { type, payload }) {
                 ...state,
                 numPage: state.numPage + 1
             };
+        case CHANGE_PAGE:
+            return {
+                ...state,
+                numPage: payload
+            }
         case FILTER: {
             let newListPokemon = null;
             payload === 'all'
                 ? newListPokemon = state.allPokemons
                 : newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.tipos.includes(payload));
+            if (!newListPokemon.length) state.notResult = true;
+            else state.notResult = false;
             return { ...state, pokemons: newListPokemon, numPage: 1 };
         }
         case ORDER: {
@@ -66,6 +74,16 @@ export default function reducer(state = initialState, { type, payload }) {
                 ...state, pokemons: orderPokemon,
             }
         }
+        case SEARCH:
+            if (!payload) return {
+                ...state,
+                notResult: true
+            }
+            return {
+                ...state,
+                pokemons: payload,
+                notResult: false
+            }
         default:
             return state
     }

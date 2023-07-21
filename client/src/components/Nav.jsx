@@ -1,7 +1,24 @@
 import styles from "../styles/nav.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { searchName } from "../redux/actions";
+import { useState } from "react";
 
 function Nav() {
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const [error, setError] = useState(true);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(searchName(search));
+    setSearch("");
+  }
+  function handleChange(e) {
+    if (e.target.value) setError(false);
+    setSearch(e.target.value);
+  }
+
   return (
     <nav className={styles.nav}>
       <Link to="/home" className={styles.containerLogo}>
@@ -12,20 +29,28 @@ function Nav() {
         />
       </Link>
       <div className={styles.searchBar}>
-        <label className={styles.text} htmlFor="search">
-          Pokemon:
-        </label>
-        <div className={styles.containerSubmit}>
-          <input
-            className={styles.input}
-            type="search"
-            id="search"
-            placeholder="Pikachu, Bulbasour, Squirtle"
-          />
-          <button className={styles.submit} type="submit">
-            Buscar
-          </button>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <label className={styles.text} htmlFor="search">
+            Pokemon:
+          </label>
+          <div className={styles.containerSubmit}>
+            <input
+              className={styles.input}
+              type="search"
+              id="search"
+              placeholder="Pikachu, Bulbasour, Squirtle"
+              value={search}
+              onChange={handleChange}
+            />
+            <button
+              className={`${styles.submit} ${error && styles.block}`}
+              type="submit"
+              disabled={error}
+            >
+              Buscar
+            </button>
+          </div>
+        </form>
       </div>
     </nav>
   );
