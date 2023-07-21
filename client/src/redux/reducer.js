@@ -1,4 +1,4 @@
-import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, CHANGE_PAGE, FILTER, ORDER, SEARCH } from "./types";
+import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, CHANGE_PAGE, FILTER, ORDER, RESET, SEARCH } from "./types";
 
 const initialState = {
     allPokemons: [],
@@ -58,7 +58,7 @@ export default function reducer(state = initialState, { type, payload }) {
             }
         case FILTER: {
             let newListPokemon = null;
-            if (payload === 'all') newListPokemon = state.allPokemons
+            if (!payload) return { ...state, notResult: false };
             else if (payload === 'api') newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.origen === payload);
             else if (payload === 'db') newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.origen === payload);
             else newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.tipos.includes(payload));
@@ -67,12 +67,19 @@ export default function reducer(state = initialState, { type, payload }) {
             return { ...state, pokemons: newListPokemon, numPage: 1 };
         }
         case ORDER: {
+            if (!payload) return { ...state, notResult: false };
             let orderPokemon = null;
-            if (payload === 'default') orderPokemon = state.allPokemons
             if (payload === 'asc') orderPokemon = [...state.pokemons].sort((a, b) => a.nombre.localeCompare(b.nombre));
             if (payload === 'desc') orderPokemon = [...state.pokemons].sort((a, b) => b.nombre.localeCompare(a.nombre));
             return {
                 ...state, pokemons: orderPokemon,
+            }
+        }
+        case RESET: {
+            return {
+                ...state, 
+                pokemons: [...state.allPokemons],
+                notResult: false
             }
         }
         case SEARCH:

@@ -10,13 +10,13 @@ function Detail() {
   const [pokemon, setPokemon] = useState({});
 
   useEffect(() => {
-    axios(`${VITE_SERVER_URL}detail/${id}`).then(({ data }) => {
-      if (data.nombre) {
-        setPokemon(data);
-      } else {
-        window.alert("No hay personajes con ese ID");
-      }
-    });
+    axios(`${VITE_SERVER_URL}detail/${id}`)
+    .then(({ data }) => {
+        setPokemon(data)
+    })
+    .catch((error) => {
+      console.error(error);
+    })
     return setPokemon({});
   }, [VITE_SERVER_URL, id]);
 

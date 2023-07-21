@@ -18,3 +18,47 @@
     cursor: pointer;
     background-color: var(--white);
 }
+.submit {
+    background-color: var(--yellow);
+    border: none;
+    color: var(--black);
+    width: 10%;
+    cursor: pointer;
+    font-weight: bolder;
+    border-radius: 0.2rem;
+    -webkit-border-radius: 0.2rem;
+    -moz-border-radius: 0.2rem;
+    -ms-border-radius: 0.2rem;
+    -o-border-radius: 0.2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.submit:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background-color: var(--blue);
+    border-radius: 5px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+      7px 7px 20px 0px rgba(0, 0, 0, .1),
+      4px 4px 5px 0px rgba(0, 0, 0, .1);
+    transition: all 0.3s ease;
+  }
+  
+  .submit:hover {
+    color: #fff;
+  }
+  
+  .submit:hover:after {
+    left: 0;
+    width: 100%;
+  }
+  
+  .submit:active {
+    top: 2px;
+  }

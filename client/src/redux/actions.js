@@ -1,4 +1,4 @@
-import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, CHANGE_PAGE, ORDER, FILTER, SEARCH } from "./types";
+import { ADD_POKEMON, ADD_TYPES, PREV, NEXT, CHANGE_PAGE, ORDER, FILTER, RESET, SEARCH } from "./types";
 import axios from 'axios';
 const { VITE_SERVER_URL } = import.meta.env;
 
@@ -48,6 +48,12 @@ export const orderCards = (orden) => {
     return {
         type: ORDER,
         payload: orden
+    }
+}
+
+export const resetPokemons = () => {
+    return {
+        type: RESET
     }
 }
 

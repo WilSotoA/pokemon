@@ -5,4 +5,5 @@ export const NEXT = 'NEXT';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const FILTER = 'FILTER';
 export const ORDER = 'ORDER';
+export const RESET = 'RESET';
 export const SEARCH = 'SEARCH';
