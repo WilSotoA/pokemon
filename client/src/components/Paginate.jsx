@@ -20,7 +20,7 @@ function Paginate({ cantPage }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (page >= 1 && page <= cantPage) dispatch(changePage(page));
+    if (page >= 1 && page <= cantPage) dispatch(changePage(parseInt(page)));
   };
 
   return (
