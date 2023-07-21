@@ -14,7 +14,8 @@ async function allPokemons(req, res) {
                 id: data.id.toString(),
                 nombre: data.name,
                 imagen: data.sprites.other.home.front_default,
-                tipos: tipos
+                origen: 'api',
+                tipos: tipos,
             };
         });
 
@@ -24,6 +25,7 @@ async function allPokemons(req, res) {
             id: pokemon.id,
             nombre: pokemon.nombre,
             imagen: pokemon.imagen,
+            origen: 'db',
             tipos: pokemon.types.map(type => type.nombre)
         }));
         const result = pokemonData.concat(updatedPokemonDb);
