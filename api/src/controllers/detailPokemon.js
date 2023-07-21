@@ -6,8 +6,16 @@ async function detailPokemon(req, res) {
     const pokemon = await Pokemon.findByPk(idPokemon, { include: Type });
     if (pokemon) {
         const updatedPokemonDb = {
-            ...pokemon.dataValues,
-            types: pokemon.types.map(type => type.nombre)
+            id: pokemon.id,
+            nombre: pokemon.nombre,
+            imagen: pokemon.imagen,
+            vida: pokemon.vida,
+            ataque: pokemon.ataque,
+            defensa: pokemon.defensa,
+            velocidad: pokemon.velocidad,
+            altura: pokemon.altura,
+            peso: pokemon.peso,
+            tipos: pokemon.types.map(type => type.nombre)
         }
         return res.status(200).json(updatedPokemonDb);
     }
@@ -17,7 +25,7 @@ async function detailPokemon(req, res) {
         const pokemon = {
             id: data.id.toString(),
             nombre: data.name,
-            imagen: data.sprites.front_default,
+            imagen: data.sprites.other.home.front_default,
             vida: data.stats[0].base_stat,
             ataque: data.stats[1].base_stat,
             defensa: data.stats[2].base_stat,

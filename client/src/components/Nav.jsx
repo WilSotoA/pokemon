@@ -13,6 +13,7 @@ function Nav() {
     e.preventDefault();
     dispatch(searchName(search));
     setSearch("");
+    setError(true);
   }
   function handleChange(e) {
     if (e.target.value) setError(false);
