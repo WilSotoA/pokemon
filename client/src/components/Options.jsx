@@ -16,13 +16,33 @@ function Options() {
 
   return (
     <div className={styles.options}>
-      <select className={styles.select} name="order" id="order" onChange={handleOrder}>
+      <select
+        className={styles.select}
+        name="order"
+        id="order"
+        onChange={handleOrder}
+      >
         <option value="default">Ordenar: </option>
         <option value="asc">Ascendente</option>
         <option value="desc">Descendente</option>
       </select>
-      <select className={styles.select} name="types" id="types" onChange={handleFilter}>
-        <option value="all">Todos</option>
+      <select
+        className={styles.select}
+        name="types"
+        id="types"
+        onChange={handleFilter}
+      >
+        <option value="all">Origen: </option>
+        <option value="api">Api</option>
+        <option value="db">Base de Datos</option>
+      </select>
+      <select
+        className={styles.select}
+        name="origin"
+        id="origin"
+        onChange={handleFilter}
+      >
+        <option value="all">Tipo: </option>
         {types &&
           types.map((type) => (
             <option key={type.id} value={type.nombre}>

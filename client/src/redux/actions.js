@@ -37,10 +37,10 @@ export const changePage = (page) => {
     }
 }
 
-export const filterCards = (tipo) => {
+export const filterCards = (filtro) => {
     return {
         type: FILTER,
-        payload: tipo
+        payload: filtro
     }
 }
 
