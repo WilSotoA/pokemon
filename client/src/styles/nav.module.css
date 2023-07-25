@@ -4,7 +4,9 @@
   height: max-content;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
 }
 
 .containerLogo {
@@ -63,9 +65,10 @@
 
 .submit {
   background-color: var(--yellow);
+  width: max-content;
+  padding: 0.5rem;
   border: none;
   color: var(--black);
-  width: 30%;
   cursor: pointer;
   font-weight: bolder;
   border-radius: 0.2rem;
@@ -114,4 +117,15 @@
 
 .submit:active {
   top: 2px;
+}
+@media (max-width: 870px) {
+  .searchBar {
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 810px) {
+  .nav {
+    justify-content: center;
+  }
 }

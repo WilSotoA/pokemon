@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addPokemon, addTypes } from "./redux/actions";
 import Landing from "./components/Landing";
 import Home from "./components/Home";
+import Form from "./components/Form";
 import Detail from "./components/Detail";
 import "./styles/app.css";
 import Nav from "./components/Nav";
@@ -14,6 +15,7 @@ function App() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
+  // Cargar todos los pokemones al estado global
   useEffect(() => {
     axios
       .get(`${VITE_SERVER_URL}`)
@@ -25,6 +27,7 @@ function App() {
       });
   }, [VITE_SERVER_URL, dispatch]);
 
+  //cargar los tipos de pokemones al estado global
   useEffect(() => {
     axios
       .get(`${VITE_SERVER_URL}types`)
@@ -42,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/form" element={<Form />} />
         <Route path="/detail/:id" element={<Detail />} />
       </Routes>
     </div>

@@ -3,7 +3,7 @@ const { Pokemon, Type } = require('../db.js');
 
 async function allPokemons(req, res) {
     try {
-        const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon', { params: { limit: 500 } });
+        const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon', { params: { limit: 40 } });
         const results = data.results;
 
         // Hacer una solicitud a cada URL de los resultados

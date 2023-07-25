@@ -29,6 +29,9 @@ function Nav() {
           alt="Logo Pokemon"
         />
       </Link>
+      <Link to="/form" className={styles.submit}>
+        Crear Pokemon
+      </Link>
       <div className={styles.searchBar}>
         <form onSubmit={handleSubmit}>
           <label className={styles.text} htmlFor="search">
@@ -39,7 +42,7 @@ function Nav() {
               className={styles.input}
               type="search"
               id="search"
-              placeholder="Pikachu, Bulbasour, Squirtle"
+              placeholder="Pikachu, Bulbasaur, Squirtle"
               value={search}
               onChange={handleChange}
             />
