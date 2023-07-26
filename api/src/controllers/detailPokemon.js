@@ -3,26 +3,12 @@ const axios = require('axios');
 
 async function detailPokemon(req, res) {
     const { idPokemon } = req.params;
-    const pokemon = await Pokemon.findByPk(idPokemon, { include: Type });
-    if (pokemon) {
-        const updatedPokemonDb = {
-            id: pokemon.id,
-            nombre: pokemon.nombre,
-            imagen: pokemon.imagen,
-            vida: pokemon.vida,
-            ataque: pokemon.ataque,
-            defensa: pokemon.defensa,
-            velocidad: pokemon.velocidad,
-            altura: pokemon.altura,
-            peso: pokemon.peso,
-            tipos: pokemon.types.map(type => type.nombre)
-        }
-        return res.status(200).json(updatedPokemonDb);
-    }
+    let pokemonData;
+
     try {
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`);
         const tipos = data.types.map((tipo) => tipo.type.name);
-        const pokemon = {
+        pokemonData = {
             id: data.id.toString(),
             nombre: data.name,
             imagen: data.sprites.other.home.front_default,
@@ -34,11 +20,37 @@ async function detailPokemon(req, res) {
             peso: data.weight,
             tipos: tipos
         };
-        return res.status(200).json(pokemon);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        if (error.response?.status === 404) {
+            try {
+                const pokemon = await Pokemon.findByPk(idPokemon, { include: Type });
+                if (pokemon) {
+                    pokemonData = {
+                        id: pokemon.id,
+                        nombre: pokemon.nombre,
+                        imagen: pokemon.imagen,
+                        vida: pokemon.vida,
+                        ataque: pokemon.ataque,
+                        defensa: pokemon.defensa,
+                        velocidad: pokemon.velocidad,
+                        altura: pokemon.altura,
+                        peso: pokemon.peso,
+                        tipos: pokemon.types.map(type => type.nombre)
+                    };
+                }
+            } catch (error) {
+                return res.status(error.response?.status || 500).json({ error: 'Error al obtener detalles del Pokémon desde la base de datos' });
+            }
+        } else {
+            return res.status(error.response?.status || 500).json({ error: 'Error al obtener detalles del Pokémon desde la API' });
+        }
     }
-    return res.status(404).json({ error: 'El pokemon con ' + idPokemon + ' no se encontro' });
+
+    if (!pokemonData) {
+        return res.status(404).json({ error: 'No se encontró el detalle del Pokémon con ese id' });
+    }
+
+    return res.status(200).json(pokemonData);
 }
 
 module.exports = detailPokemon;
