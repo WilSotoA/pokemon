@@ -43,6 +43,7 @@ export async function handleFormSubmit(
     errors,
     setInputs,
     setErrors,
+    setModal,
     dispatch
 ) {
     e.preventDefault();
@@ -62,12 +63,13 @@ export async function handleFormSubmit(
             tipos: [],
         });
         setErrors(["Complete los campos * obligatorios"]);
-        alert("¡Se creo el Pokemon con Exito!");
+        setModal(["Pokemon Creado", "¡Se creo el Pokemon con Exito!"]);
     } catch (error) {
         if (error.response?.data?.error) {
-            alert(error.response.data.error);
+            setModal(["Error", error.response.data.error]);
         } else {
-            alert("Error al crear el Pokemon");
+            setModal(["Error", "¡Error al crear el pokemon! 🤦"]);
+
         }
         console.error(error.message);
     }
