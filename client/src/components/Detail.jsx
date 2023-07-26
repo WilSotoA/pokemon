@@ -11,12 +11,12 @@ function Detail() {
 
   useEffect(() => {
     axios(`${VITE_SERVER_URL}detail/${id}`)
-    .then(({ data }) => {
-        setPokemon(data)
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+      .then(({ data }) => {
+        setPokemon(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     return setPokemon({});
   }, [VITE_SERVER_URL, id]);
 

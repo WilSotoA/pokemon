@@ -2,19 +2,23 @@ const { Pokemon, Type } = require('../db.js');
 
 async function newPokemon(req, res) {
     const { nombre, imagen, vida, ataque, defensa, velocidad, altura, peso, tipos } = req.body;
-    if (!nombre || !imagen || !vida || !ataque || !defensa || !tipos || tipos.length < 2) {
+    if (!nombre || !imagen || !vida || !ataque || !defensa || tipos.length < 2) {
         return res.status(422).json({ error: 'Datos incompletos' });
     }
     try {
+        const existingPokemon = await Pokemon.findOne({ where: { nombre } });
+        if (existingPokemon) {
+            return res.status(409).json({ error: 'Pokemon ya creado' });
+        }
         const newPokemon = await Pokemon.create({
-            nombre,
-            imagen,
-            vida,
-            ataque,
-            defensa,
-            velocidad,
-            altura,
-            peso
+            nombre: nombre.toLowerCase(),
+            imagen: imagen.toLowerCase(),
+            vida: parseInt(vida),
+            ataque: parseInt(ataque),
+            defensa: parseInt(defensa),
+            velocidad: parseInt(velocidad),
+            altura: parseInt(altura),
+            peso: parseInt(peso)
         });
         const tipoIds = [];
         for (const tipoNombre of tipos) {

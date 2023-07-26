@@ -1,14 +1,10 @@
 import { useState } from "react";
 import styles from "../styles/form.module.css";
 import pokemon from "../assets/pokemon.png";
-import validate from "../utils/validate";
+import { handleInputChange, handleFormSubmit } from "../utils/handleForm";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { addPokemon } from "../redux/actions";
 
 function Form() {
-  const { VITE_SERVER_URL } = import.meta.env;
-
   const types = useSelector((state) => state.types);
   const dispatch = useDispatch();
 
@@ -26,67 +22,11 @@ function Form() {
   const [errors, setErrors] = useState(["Complete los campos * obligatorios"]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "tipos") {
-      if (value && !inputs.tipos.includes(value)) {
-        setInputs({
-          ...inputs,
-          tipos: [...inputs.tipos, value],
-        });
-        setErrors(
-          validate({
-            ...inputs,
-            tipos: [...inputs.tipos, value],
-          })
-        );
-      }
-    } else {
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-
-      setErrors(
-        validate({
-          ...inputs,
-          [name]: value,
-        })
-      );
-    }
+    handleInputChange(e, inputs, setInputs, setErrors);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (errors.length > 0) return alert("Complete las validaciones");
-    try {
-      const newPokemon = {
-        ...inputs,
-        vida: parseInt(inputs.vida),
-        ataque: parseInt(inputs.ataque),
-        defensa: parseInt(inputs.defensa),
-        velocidad: parseInt(inputs.velocidad),
-        altura: parseInt(inputs.altura),
-        peso: parseInt(inputs.peso),
-      };
-      const { data } = await axios.post(VITE_SERVER_URL, newPokemon);
-      dispatch(addPokemon(data));
-      setInputs({
-        nombre: "",
-        imagen: "",
-        vida: "",
-        ataque: "",
-        defensa: "",
-        velocidad: "",
-        altura: "",
-        peso: "",
-        tipos: [],
-      });
-      setErrors(["Complete los campos * obligatorios"]);
-      alert("¡Se creo el Pokemon con Exito!");
-    } catch (error) {
-      alert("Error al crear el Pokemon");
-      console.error(error.message);
-    }
+    handleFormSubmit(e, inputs, errors, setInputs, setErrors, dispatch);
   };
 
   return (

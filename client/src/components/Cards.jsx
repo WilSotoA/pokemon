@@ -23,7 +23,7 @@ export default function Cards() {
 
   useEffect(() => {
     setLoading(true);
-      if (pokemons.length) setLoading(false);
+    if (pokemons.length) setLoading(false);
   }, [numPage, pokemons]);
 
   const viewPokemons = pokemons.slice(from, to);

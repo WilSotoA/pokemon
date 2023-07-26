@@ -26,7 +26,10 @@ function Options() {
         <option value="asc">Ascendente</option>
         <option value="desc">Descendente</option>
       </select>
-      <button className={styles.submit} onClick={()=>dispatch(resetPokemons())}>
+      <button
+        className={styles.submit}
+        onClick={() => dispatch(resetPokemons())}
+      >
         Resetear
       </button>
       <select
