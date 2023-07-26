@@ -1,38 +1,108 @@
 import { useState } from "react";
 import styles from "../styles/form.module.css";
 import pokemon from "../assets/pokemon.png";
+import validate from "../utils/validate";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { addPokemon } from "../redux/actions";
 
 function Form() {
-  const [inputs, setInputs] = useState({
-    name: "",
-    image: "",
-    health: "",
-    attack: "",
-    defense: "",
-    speed: "",
-    height: "",
-    weight: "",
-  });
-  const [errors, setErrors] = useState([]);
+  const { VITE_SERVER_URL } = import.meta.env;
 
-  function handleChange(e) {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
-  }
-  function handleSubmit(e) {
+  const types = useSelector((state) => state.types);
+  const dispatch = useDispatch();
+
+  const [inputs, setInputs] = useState({
+    nombre: "",
+    imagen: "",
+    vida: "",
+    ataque: "",
+    defensa: "",
+    velocidad: "",
+    altura: "",
+    peso: "",
+    tipos: [],
+  });
+  const [errors, setErrors] = useState(["Complete los campos * obligatorios"]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "tipos") {
+      if (value && !inputs.tipos.includes(value)) {
+        setInputs({
+          ...inputs,
+          tipos: [...inputs.tipos, value],
+        });
+        setErrors(
+          validate({
+            ...inputs,
+            tipos: [...inputs.tipos, value],
+          })
+        );
+      }
+    } else {
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+
+      setErrors(
+        validate({
+          ...inputs,
+          [name]: value,
+        })
+      );
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  }
+    if (errors.length > 0) return alert("Complete las validaciones");
+    try {
+      const newPokemon = {
+        ...inputs,
+        vida: parseInt(inputs.vida),
+        ataque: parseInt(inputs.ataque),
+        defensa: parseInt(inputs.defensa),
+        velocidad: parseInt(inputs.velocidad),
+        altura: parseInt(inputs.altura),
+        peso: parseInt(inputs.peso),
+      };
+      const { data } = await axios.post(VITE_SERVER_URL, newPokemon);
+      dispatch(addPokemon(data));
+      setInputs({
+        nombre: "",
+        imagen: "",
+        vida: "",
+        ataque: "",
+        defensa: "",
+        velocidad: "",
+        altura: "",
+        peso: "",
+        tipos: [],
+      });
+      setErrors(["Complete los campos * obligatorios"]);
+      alert("¡Se creo el Pokemon con Exito!");
+    } catch (error) {
+      alert("Error al crear el Pokemon");
+      console.error(error.message);
+    }
+  };
 
   return (
     <div className={styles.containerForm}>
       <div className={styles.image}>
-        <h3>Complete los * obligatorios</h3>
-        {errors.length > 0 &&
-          errors.map((err, index) => <h6 key={index}>{err}</h6>)}
+        {errors.length > 0 && (
+          <ul>
+            {errors.map((err, index) => (
+              <li className={styles.required} key={index}>
+                {err}
+              </li>
+            ))}
+          </ul>
+        )}
         <img
-          src={inputs.image}
+          src={inputs.imagen}
           alt="imagen de pokemon"
           onError={(e) => (e.target.src = pokemon)}
         />
@@ -45,9 +115,9 @@ function Form() {
           <input
             type="text"
             id="name"
-            name="name"
+            name="nombre"
             placeholder="Charizard"
-            value={inputs.name}
+            value={inputs.nombre}
             onChange={handleChange}
           />
         </div>
@@ -58,9 +128,9 @@ function Form() {
           <input
             type="text"
             id="image"
-            name="image"
-            placeholder="http://charizard.com"
-            value={inputs.image}
+            name="imagen"
+            placeholder="http://charizard.com/char.jpg"
+            value={inputs.imagen}
             onChange={handleChange}
           />
         </div>
@@ -71,9 +141,9 @@ function Form() {
           <input
             type="number"
             id="health"
-            name="health"
+            name="vida"
             placeholder="100"
-            value={inputs.health}
+            value={inputs.vida}
             onChange={handleChange}
           />
         </div>
@@ -84,9 +154,9 @@ function Form() {
           <input
             type="number"
             id="attack"
-            name="attack"
+            name="ataque"
             placeholder="80"
-            value={inputs.attack}
+            value={inputs.ataque}
             onChange={handleChange}
           />
         </div>
@@ -97,9 +167,9 @@ function Form() {
           <input
             type="number"
             id="defense"
-            name="defense"
+            name="defensa"
             placeholder="60"
-            value={inputs.defense}
+            value={inputs.defensa}
             onChange={handleChange}
           />
         </div>
@@ -108,9 +178,9 @@ function Form() {
           <input
             type="number"
             id="speed"
-            name="speed"
+            name="velocidad"
             placeholder="120"
-            value={inputs.speed}
+            value={inputs.velocidad}
             onChange={handleChange}
           />
         </div>
@@ -119,10 +189,9 @@ function Form() {
           <input
             type="number"
             id="height"
-            name="height"
+            name="altura"
             placeholder="7 dm"
-            max="200"
-            value={inputs.height}
+            value={inputs.altura}
             onChange={handleChange}
           />
         </div>
@@ -131,14 +200,45 @@ function Form() {
           <input
             type="number"
             id="weight"
-            name="weight"
+            name="peso"
             placeholder="69 hg"
-            max="9999"
-            value={inputs.weight}
+            value={inputs.peso}
             onChange={handleChange}
           />
         </div>
-        <button className={styles.submit} type="submit">
+        <div className={styles.container}>
+          <label htmlFor="types">Tipos: </label>
+          <select
+            className={styles.select}
+            name="tipos"
+            id="types"
+            onChange={handleChange}
+          >
+            <option value="">Tipo</option>
+            {types &&
+              types.map((type) => (
+                <option key={type.id} value={type.nombre}>
+                  {type.nombre}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className={styles.container}>
+          {inputs.tipos.length > 0 && (
+            <div className="tipos">
+              {inputs.tipos.map((tipo, index) => (
+                <h3 key={index} className={`tipo ${tipo}`}>
+                  {tipo}
+                </h3>
+              ))}
+            </div>
+          )}
+        </div>
+        <button
+          className={`${styles.submit} ${errors.length > 0 && styles.block}`}
+          type="submit"
+          disabled={errors.length > 0 ? true : false}
+        >
           Crear
         </button>
       </form>

@@ -35,11 +35,11 @@ function Detail() {
             onError={(e) => (e.target.src = imgPokemon)}
           />
         </picture>
-        <div className={styles.tipos}>
+        <div className="tipos">
           {pokemon?.tipos &&
             pokemon.tipos.map((tipo, index) => {
               return (
-                <h1 key={index} className={`${styles[tipo]} ${styles.tipo}`}>
+                <h1 key={index} className={`tipo ${tipo}`}>
                   {tipo}
                 </h1>
               );

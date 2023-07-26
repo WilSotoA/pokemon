@@ -16,9 +16,9 @@ function Card({ id, nombre, imagen, tipos }) {
         />
 
         {tipos && (
-          <div className={styles.tipos}>
+          <div className="tipos">
             {tipos.map((tipo, index) => (
-              <h3 key={index} className={`${styles[tipo]} ${styles.tipo}`}>
+              <h3 key={index} className={`tipo ${tipo}`}>
                 {tipo}
               </h3>
             ))}

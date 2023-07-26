@@ -3,7 +3,7 @@ const { Pokemon, Type } = require('../db.js');
 async function newPokemon(req, res) {
     const { nombre, imagen, vida, ataque, defensa, velocidad, altura, peso, tipos } = req.body;
     if (!nombre || !imagen || !vida || !ataque || !defensa || !tipos || tipos.length < 2) {
-        return res.status(422).json({error: 'Datos incompletos'});
+        return res.status(422).json({ error: 'Datos incompletos' });
     }
     try {
         const newPokemon = await Pokemon.create({
@@ -24,7 +24,15 @@ async function newPokemon(req, res) {
             tipoIds.push(tipo.id);
         }
         await newPokemon.setTypes(tipoIds);
-        res.status(200).json(newPokemon);
+        const pokemonWithTypes = await Pokemon.findByPk(newPokemon.id, { include: Type });
+        const updatedPokemonDb = {
+            id: pokemonWithTypes.id,
+            nombre: pokemonWithTypes.nombre,
+            imagen: pokemonWithTypes.imagen,
+            origen: 'db',
+            tipos: pokemonWithTypes.types.map(type => type.nombre)
+        };
+        res.status(200).json(updatedPokemonDb);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
