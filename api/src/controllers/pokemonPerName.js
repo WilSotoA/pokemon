@@ -10,26 +10,26 @@ async function pokemonPerName(req, res) {
     try {
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
         const tipos = data.types.map((tipo) => tipo.type.name);
-        pokemonData = {
+        pokemonData = [{
             id: data.id.toString(),
             nombre: data.name,
             imagen: data.sprites.other.home.front_default,
             origen: 'api',
             tipos: tipos,
-        };
+        }];
     } catch (error) {
         if (error.response?.status === 404) {
             try {
                 const pokemon = await Pokemon.findOne({ where: { nombre: name }, include: Type });
                 if (pokemon) {
-                    pokemonData = {
+                    pokemonData = [{
                         id: pokemon.id,
                         nombre: pokemon.nombre,
                         imagen: pokemon.imagen,
                         ataque: pokemon.ataque,
                         origen: 'db',
                         tipos: pokemon.types.map(type => type.nombre)
-                    };
+                    }];
                 }
             } catch (error) {
                 return res.status(error.response?.status || 500).json({ error: 'Error al obtener el Pokémon desde la base de datos' });
