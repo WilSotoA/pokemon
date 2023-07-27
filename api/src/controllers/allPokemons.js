@@ -15,6 +15,7 @@ async function allPokemons(req, res) {
                     id: data.id.toString(),
                     nombre: data.name,
                     imagen: data.sprites.other.home.front_default,
+                    ataque: data.stats[1].base_stat,
                     origen: 'api',
                     tipos: tipos,
                 };
@@ -31,6 +32,7 @@ async function allPokemons(req, res) {
                 id: pokemon.id,
                 nombre: pokemon.nombre,
                 imagen: pokemon.imagen,
+                ataque: pokemon.ataque,
                 origen: 'db',
                 tipos: pokemon.types.map(type => type.nombre)
             }));

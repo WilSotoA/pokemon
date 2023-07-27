@@ -26,6 +26,7 @@ async function pokemonPerName(req, res) {
                         id: pokemon.id,
                         nombre: pokemon.nombre,
                         imagen: pokemon.imagen,
+                        ataque: pokemon.ataque,
                         origen: 'db',
                         tipos: pokemon.types.map(type => type.nombre)
                     };

@@ -25,6 +25,8 @@ function Options() {
         <option value="">Ordenar: </option>
         <option value="asc">Ascendente</option>
         <option value="desc">Descendente</option>
+        <option value="maAttack">Mayor Ataque</option>
+        <option value="miAttack">Menor Ataque</option>
       </select>
       <button
         className={styles.submit}

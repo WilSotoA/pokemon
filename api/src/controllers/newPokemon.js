@@ -43,6 +43,7 @@ async function newPokemon(req, res) {
             id: pokemonWithTypes.id,
             nombre: pokemonWithTypes.nombre,
             imagen: pokemonWithTypes.imagen,
+            ataque: pokemonWithTypes.ataque,
             origen: 'db',
             tipos: pokemonWithTypes.types.map(type => type.nombre)
         };

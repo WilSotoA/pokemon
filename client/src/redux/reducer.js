@@ -71,13 +71,15 @@ export default function reducer(state = initialState, { type, payload }) {
             let orderPokemon = null;
             if (payload === 'asc') orderPokemon = [...state.pokemons].sort((a, b) => a.nombre.localeCompare(b.nombre));
             if (payload === 'desc') orderPokemon = [...state.pokemons].sort((a, b) => b.nombre.localeCompare(a.nombre));
+            if (payload === 'maAttack') orderPokemon = [...state.pokemons].sort((a, b) => b.ataque - a.ataque);
+            if (payload === 'miAttack') orderPokemon = [...state.pokemons].sort((a, b) => a.ataque - b.ataque);
             return {
                 ...state, pokemons: orderPokemon,
             }
         }
         case RESET: {
             return {
-                ...state, 
+                ...state,
                 pokemons: [...state.allPokemons],
                 notResult: false
             }
