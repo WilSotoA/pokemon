@@ -186,11 +186,20 @@ function Form() {
           </div>
           <div className={styles.container}>
             {inputs.tipos.length > 0 && (
-              <div className="tipos">
+              <div className={`tipos ${styles.tipos}`}>
                 {inputs.tipos.map((tipo, index) => (
-                  <h3 key={index} className={`tipo ${tipo}`}>
-                    {tipo}
-                  </h3>
+                  <div
+                    className={styles.delete}
+                    key={index}
+                    onClick={() =>
+                      setInputs({
+                        ...inputs,
+                        tipos: inputs.tipos?.filter((tipos) => tipos !== tipo),
+                      })
+                    }
+                  >
+                    <h3 className={`tipo ${tipo} ${styles.tipo}`}>{tipo}</h3>
+                  </div>
                 ))}
               </div>
             )}

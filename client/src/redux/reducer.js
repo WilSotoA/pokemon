@@ -20,8 +20,8 @@ export default function reducer(state = initialState, { type, payload }) {
             }
             return {
                 ...state,
-                pokemons: [payload, ...state.allPokemons],
-                allPokemons: [payload, ...state.allPokemons]
+                pokemons: [...state.allPokemons, payload],
+                allPokemons: [...state.allPokemons, payload]
             };
         case ADD_TYPES:
             if (Array.isArray(payload)) {

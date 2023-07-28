@@ -68,9 +68,29 @@
   -ms-border-radius: 0.2rem;
   -o-border-radius: 0.2rem;
 }
+.tipos {
+  max-width: 260px;
+}
 
 .required {
   color: var(--red);
+}
+
+.delete:hover {
+  background-color: var(--red);
+  cursor: pointer;
+  position: relative;
+  border-radius: 1rem;
+  z-index: 10;
+}
+
+.tipo {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.tipo:hover {
+  opacity: 0.2;
 }
 
 .select {
