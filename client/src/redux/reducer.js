@@ -57,11 +57,12 @@ export default function reducer(state = initialState, { type, payload }) {
                 numPage: payload
             }
         case FILTER: {
-            let newListPokemon = null;
+            let newListPokemon = [];
             if (!payload) return { ...state, notResult: false };
-            else if (payload === 'api') newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.origen === payload);
-            else if (payload === 'db') newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.origen === payload);
-            else newListPokemon = [...state.allPokemons].filter(pokemon => pokemon.tipos.includes(payload));
+            newListPokemon = [...state.allPokemons].filter(pokemon =>
+                (!payload.origin || pokemon.origen === payload.origin) &&
+                (!payload.types || pokemon.tipos.includes(payload.types))
+            );
             if (!newListPokemon.length) state.notResult = true;
             else state.notResult = false;
             return { ...state, pokemons: newListPokemon, numPage: 1 };

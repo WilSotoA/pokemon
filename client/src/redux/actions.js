@@ -67,6 +67,12 @@ export const searchName = (name) => {
                 payload: data,
             });
         } catch (error) {
+            console.error(error);
+            if (error.response?.data?.error) {
+                alert(error.response.data.error);
+            } else {
+                alert("error en la petición");
+            }
             return dispatch({
                 type: SEARCH,
                 payload: '',

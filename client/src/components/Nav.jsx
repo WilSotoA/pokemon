@@ -11,7 +11,7 @@ function Nav() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(searchName(search));
+    dispatch(searchName(search.trim()));
     setSearch("");
     setError(true);
   }
