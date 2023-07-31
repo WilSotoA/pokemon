@@ -17,7 +17,7 @@ const validate = (inputs) => {
         inputsValidate.push("El nombre solo puede contener letras");
 
     if (!imageRegex.test(inputs.imagen))
-        inputsValidate.push("La url de la imagenn debe ser valida");
+        inputsValidate.push("La url de la imagen debe ser valida");
 
     if (inputs.vida > 200 || inputs.ataque > 200 || inputs.defensa > 200 || inputs.velocidad > 200)
         inputsValidate.push("La vida, ataque, defensa o velocidad no debe ser mayor a 200")
